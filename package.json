@@ -1,0 +1,15 @@
+{
+  "name": "todo",
+  "version": "1.0.0",
+  "description": "Todo App Functionality",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "keywords": [
+    "react",
+    "todo"
+  ],
+  "author": "Subhajit Dutta",
+  "license": "ISC"
+}
