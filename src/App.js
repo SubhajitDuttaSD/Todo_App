@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import { createRoot } from "react-dom/client";
 import store from "./store";
 import { Provider, useDispatch, useSelector } from "react-redux";
@@ -7,16 +7,17 @@ import { AddTodoAction, RemoveTodoAction } from "./actions/TodoActions";
 const App = () => {
   const [todoInput, setTodoInput] = useState("");
   const dispatch = useDispatch();
-  const todoState = useSelector((state) => state.Todo);
-  const { todos } = todoState;
+  const { todos } = useSelector((state) => state);
+  const todoInputRef = useRef();
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    dispatch(AddTodoAction(todoInput));
+    AddTodoAction(dispatch, todoInput, todos);
+    todoInputRef.current.value = "";
   };
 
-  const handleRemoveTodo = (todo) => {
-    dispatch(RemoveTodoAction(todo));
+  const handleRemoveTodo = (todoObj) => {
+    RemoveTodoAction(dispatch, todoObj, todos);
   };
 
   return (
@@ -26,6 +27,7 @@ const App = () => {
       </header>
       <form onSubmit={handleSubmit}>
         <input
+          ref={todoInputRef}
           placeholder="Enter a todo"
           onChange={(e) => setTodoInput(e.target.value)}
         />

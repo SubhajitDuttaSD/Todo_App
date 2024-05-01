@@ -1,26 +1,17 @@
-export const AddTodoAction = (todo) => (dispatch, getState) => {
-  console.log({ getState });
-  const {
-    Todo: { todos },
-  } = getState();
+export const AddTodoAction = (dispatch, todoInput, todos) => {
+  const hasTodo = todos.find((item) => item.todo === todoInput);
 
-  const hasTodo = todos.find((item) => item.todo === todo);
-
-  if (!hasTodo && todo !== "") {
+  if (!hasTodo && todoInput !== "") {
     dispatch({
       type: "ADD_TODO",
-      payload: [{ id: todo, todo }, ...todos],
+      payload: [{ id: todoInput, todo: todoInput }, ...todos],
     });
   }
 };
 
-export const RemoveTodoAction = (todo) => (dispatch, getState) => {
-  const {
-    Todo: { todos },
-  } = getState();
-
+export const RemoveTodoAction = (dispatch, deleteTodoObj, todos) => {
   dispatch({
     type: "DELETE_TODO",
-    payload: todos.filter((item) => item.id !== todo.id),
+    payload: todos.filter((item) => item.id !== deleteTodoObj.id),
   });
 };
